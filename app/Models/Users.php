@@ -7,11 +7,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * Class FUsers.
+ * Class Users.
  *
  * @package namespace App\Models;
  */
-class FUsers extends Authenticatable
+class Users extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
@@ -21,7 +21,7 @@ class FUsers extends Authenticatable
      * @var array
      */
     
-    protected $table = 'f_users';
+    protected $table = 'users';
 
     protected $guarded = [];
 
@@ -39,7 +39,7 @@ class FUsers extends Authenticatable
 
     public function findForPassport($login)
     {
-        return $this->orWhere('cell', $login)
+        return $this->orWhere('login_id', $login)
                 ->where('lock_status', self::lock_status_unlock)->first();
     }
 

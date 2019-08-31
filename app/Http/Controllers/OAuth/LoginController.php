@@ -44,6 +44,7 @@ class LoginController extends AccessTokenController
         } catch (\Exception $e) {
             throw new OauthException(-9999999);
         } catch (\Throwable $e) {
+            dump($e);
             throw new OauthException(-9999999);
         }
     }

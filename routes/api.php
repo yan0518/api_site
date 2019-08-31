@@ -11,20 +11,26 @@
 |
 */
 
-Route::group(['namespace' => 'OAuth', 'middleware' => ['log']], function () {
+Route::group(['namespace' => 'OAuth'], function () {
     Route::post('oauth/access_token', 'LoginController@login')->name('oauth.token');
     Route::post('oauth/refresh_token', 'LoginController@login')->name('oauth.token');
     Route::get('oauth/logout', 'LoginController@logout')->middleware('auth:api');
-    Route::post('oauth/forgotpwd', 'ForgotPwdController@forgetpwd');
 });
 
-Route::group(['prefix' => 'v1', 'namespace' => 'v1', 'middleware' => ['smartapp', 'log', 'auth:api']], function(){
-    Route::get('user/info', 'FUsersController@info');
-    Route::get('farm/info', 'FFarmsController@info');
-    Route::get('house/{id}', 'FHousesController@info');
-    Route::get('house/samples/{id}/{crop_id}', 'FHousesController@samples');
-    Route::get('house/crops/{id}', 'FHousesController@crops');
-    Route::get('house/tasks/{id}/{crop_id}', 'FHousesController@tasks');
-    Route::post('scan/code', 'FScanController@scan');
-    Route::post('image/upload', 'FImagesController@upload');
+Route::group(['middleware' => ['auth:api']], function(){
+    // 管理员账号信息
+    Route::get('user/info', 'UsersController@info');
+
+    // 医生管理
+    Route::get('doctor/{id?}', 'DoctorController@list');
+    Route::post('doctor', 'DoctorController@create');
+    Route::post('doctor/edit', 'DoctorController@update');
+    Route::post('doctor/delete/{id}', 'DoctorController@delete');
+    Route::get('doctor/{id}', 'DoctorController@info');
+
+    // 用户一览
+    Route::get('patient/list', 'PatientController@list');
 });
+
+// 扫码绑定医生
+Route::get('doctor/patient/{uuid}', 'DoctorController@bind');

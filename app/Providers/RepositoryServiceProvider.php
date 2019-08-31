@@ -23,7 +23,10 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Repositories\FUsersRepository::class, \App\Repositories\FUsersRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\UsersRepository::class, \App\Repositories\UsersRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\CreateDoctorsTableRepository::class, \App\Repositories\CreateDoctorsTableRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\CreateWechatUsersTableRepository::class, \App\Repositories\CreateWechatUsersTableRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\CreateDoctorPatientsTableRepository::class, \App\Repositories\CreateDoctorPatientsTableRepositoryEloquent::class);
         //:end-bindings:
     }
 }
