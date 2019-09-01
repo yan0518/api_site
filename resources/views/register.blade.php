@@ -139,66 +139,42 @@
                 $(this).removeAttr("disabled")
                 return false
             }
-            $.post('/MMCButler/mmcButler/hasBind', {
-                "cell": phoneNum,
-                "openid": '12341234'
-            }, function (res) {
-                if (res.code == -2) {
-                    $('#shade').css('display', 'block')
-                    $('.bindingWeChat').css('display', 'block')
-                    $('.getNums').removeAttr("disabled")
-                    return false
-                }
 
-                if (res.code != 1) {
-                    $('.showText').html('该手机号已在其他微信中绑定！')
-                    $('#shade').css('display', 'block')
-                    $('#modal').css('display', 'block')
-                    $('.getNums').removeAttr("disabled")
-                    return false
-                }
-                // post a JSON payload:
-                $.post('/api/sms/send', JSON.stringify({
-                    "phone": phoneNum,
-                    "templateType": "6",
-                    "from": "2"
-                }), function (data) {
-                    let res = $.parseJSON(data);
-                    if (res.code == -1) {
-                        if (res.message.indexOf('手机号') >= 0) {
-                            $('#shade').css('display', 'block')
-                            $('#modal').css('display', 'block')
-                            $('.getNums').removeAttr("disabled")
-                            return false
-                        } else {
-                            $('.showText').html('验证码发送失败！')
-                            $('#shade').css('display', 'block')
-                            $('#modal').css('display', 'block')
-                            $('.getNums').removeAttr("disabled")
-                            return false
-                        }
+            // post a JSON payload:
+            $.post('/api/sms/send', JSON.stringify({
+                "phone": phoneNum,
+                "templateType": "6",
+                "from": "2"
+            }), function (data) {
+                let res = data;
+                if (res.code == -1) {
+                    if (res.message.indexOf('手机号') >= 0) {
+                        $('#shade').css('display', 'block')
+                        $('#modal').css('display', 'block')
+                        $('.getNums').removeAttr("disabled")
+                        return false
                     } else {
-                        var count = 60;
-                        let timer = setInterval(() => {
-                            count--;
-                            if (count > 0) {
-                                $('.getNums').attr({"disabled": "disabled"}).css({background: '#CACACA'})[0].innerHTML = count + 's后' + '重新获取'
-                            } else {
-                                $('.getNums').removeAttr("disabled").css({background: '#F67710'})[0].innerHTML = '获取';
-                                clearInterval(timer)
-                            }
-                        }, 1000);
+                        $('.showText').html('验证码发送失败！')
+                        $('#shade').css('display', 'block')
+                        $('#modal').css('display', 'block')
+                        $('.getNums').removeAttr("disabled")
+                        return false
                     }
-
-                })
+                } else {
+                    var count = 60;
+                    let timer = setInterval(() => {
+                        count--;
+                        if (count > 0) {
+                            $('.getNums').attr({"disabled": "disabled"}).css({background: '#CACACA'})[0].innerHTML = count + 's后' + '重新获取'
+                        } else {
+                            $('.getNums').removeAttr("disabled").css({background: '#F67710'})[0].innerHTML = '获取';
+                            clearInterval(timer)
+                        }
+                    }, 1000);
+                }
 
             })
 
-
-        });
-
-        $('#btnBind').click(function () {
-            window.location.href = "/MQss/MUser?from=6";
         })
 
 
@@ -347,37 +323,11 @@
 
         });
 
-        // 协议的勾选与不勾选
-        $('#agreement').click(function () {
-            var $radio = $(this);
-            if ($radio.data('waschecked') == true) {
-                $radio.prop('checked', false);
-                $radio.data('waschecked', false);
-            } else {
-                $radio.prop('checked', true);
-                $radio.data('waschecked', true);
-            }
-        });
 
-
-        // 点击协议链接，打开新的遮罩层显示协议
-        $('#userAgreement').click(function () {
-            $('.agreementBox').css({'display': 'block'})
-        })
-
-        // 点击协议，关闭遮罩层
-        $('.modalClose').click(function () {
-            $('.agreementBox').css({'display': 'none'})
-        })
 
         $('#closeModal').click(function () {
             $('#shade').css('display', 'none')
             $('#modal').css('display', 'none')
-        })
-
-        $('#closeModal2').click(function () {
-            $('#shade').css('display', 'none')
-            $('.bindingWeChat').css('display', 'none')
         })
 
     })

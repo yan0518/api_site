@@ -32,5 +32,10 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('patient/list', 'PatientController@list');
 });
 
+
+
+
+Route::post('sms/send', 'SmsController@send');
+
 // 扫码绑定医生
 Route::get('doctor/patient/{uuid}', 'DoctorController@bind');
