@@ -234,12 +234,6 @@
                 return false
             }
 
-            if ($('#agreement').data('waschecked') != true) {
-                $('.showText').html('请同意勾选协议！')
-                $('#shade').css('display', 'block')
-                $('#modal').css('display', 'block')
-                return false
-            }
 
             $(this).attr({"disabled": "disabled"})
 
