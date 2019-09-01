@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Exceptions\SmartAppException;
+use App\Exceptions\DoctorAppException;
 use App\Http\Controllers\Controller;
 use App\Repositories\DoctorsRepositoryEloquent;
+use App\Repositories\DoctorPatientsRepositoryEloquent;
+use App\Repositories\WechatUsersRepositoryEloquent;
 use App\Models\Doctors;
+use App\Models\DoctorPatients;
 use App\Http\Requests\DoctorRequest;
 use App\Http\Requests\DoctorEditRequest;
 use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class DoctorController.
@@ -22,15 +26,21 @@ class DoctorController extends Controller
      * @var DoctorsRepositoryEloquent
      */
     protected $doctor;
+    protected $doctor_patients;
+    protected $patients;
 
     /**
      * DoctorController constructor.
      *
      * @param DoctorsRepositoryEloquent $repository
      */
-    public function __construct(DoctorsRepositoryEloquent $doctor)
+    public function __construct(DoctorsRepositoryEloquent $doctor,
+                    DoctorPatientsRepositoryEloquent $doctor_patients,
+                    WechatUsersRepositoryEloquent $patients)
     {
         $this->doctor = $doctor;
+        $this->doctor_patients = $doctor_patients;
+        $this->patients = $patients;
     }
 
     public function list($id = 0) {
@@ -61,7 +71,7 @@ class DoctorController extends Controller
             'saler' => $request->saler,
             'sale_cell' => $request->sale_cell,
             'photo' => $photo,
-            'uuid' => '',
+            'uuid' => Uuid::uuid4(),
             'status' => Doctors::status_valid
         ];
         $this->doctor->create($data);
@@ -108,8 +118,35 @@ class DoctorController extends Controller
         return $this->SuccessResponse();
     }
 
-    public function bind($uuid) {
+    public function bind($uuid, Request $request) {
+        $doctor = $this->doctor->findWhere(['uuid' => $uuid])->first();
+        if(is_null($doctor)){
+            throw new DoctorAppException(-2100003);
+        }
 
+        $unionid = $request->unionid;
+        $patient = $this->patients->findWhere(['unionid' => $unionid])->first();
+        if(is_null($patient)){
+            throw new DoctorAppException(-2100003);
+        }
+
+        $doc_patient = $this->doctor_patients->findWhere([
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+        ])->first();
+        if(is_null($doc_patient)) {
+            $this->doctor_patients->create([
+                'doctor_id' => $doctor->id,
+                'patient_id' => $patient->id,
+                'status' => DoctorPatients::status_valid
+            ]);
+        } else if($doctor_patients->status == DoctorPatients::status_invalid) {
+            $this->doctor_patients->update([
+                'status' => DoctorPatients::status_valid
+            ], $doc_patient->id);
+        }
+
+        return $this->SuccessResponse();
     }
 
 }

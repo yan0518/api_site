@@ -34,3 +34,4 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 // 扫码绑定医生
 Route::get('doctor/patient/{uuid}', 'DoctorController@bind');
+
