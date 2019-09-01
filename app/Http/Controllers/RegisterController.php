@@ -30,4 +30,8 @@ class RegisterController extends Controller
         return View('register');
     }
 
+    public function succeed()
+    {
+        return View('registerSucceed');
+    }
 }

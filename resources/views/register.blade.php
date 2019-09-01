@@ -10,7 +10,7 @@
     <script src="{{env('APP_URL')}}/js/zepto.js"></script>
     <script src="{{env('APP_URL')}}/js/svgxuse.js"></script>
 </head>
-<body>
+<body style="background: #f3f3f3;">
 <div class="content">
     <img src="{{env('APP_URL')}}/img/未注册绑定微信copy-banner图@3x.png" class="banner">
     <div class="userForm">

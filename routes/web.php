@@ -18,3 +18,4 @@ Route::get('/', function () {
 
 // 用户注册
 Route::get('user/register/{docId}', 'RegisterController@index');
+Route::get('user/register_succeed', 'RegisterController@succeed');
