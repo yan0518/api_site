@@ -28,9 +28,9 @@ class DoctorRequest extends FormRequest
             'hospital'   => 'bail|required|string',
             'department' => 'bail|required|integer',
             'position'   => 'bail|required|integer',
-            'cell'       => 'bail|required|integer',
+            'cell'       => 'bail|required|digits:11',
             'saler'      => 'bail|sometimes|string',
-            'sale_cell'  => 'bail|sometimes|integer'
+            'sale_cell'  => 'bail|sometimes|digits:11'
         ];
     }
 
@@ -45,11 +45,9 @@ class DoctorRequest extends FormRequest
             'position.required'   => -1100015,
             'position.integer'    => -1100016,
             'cell.required'       => -1100017,
-            'cell.integer'        => -1100018,
-            // 'cell.max'            => -1100018,
+            'cell.digits'        => -1100018,
             'saler.string'        => -1100019,
-            'sale_cell.integer'   => -1100020,
-            // 'sale_cell.max'       => -1100020,
+            'sale_cell.digits'   => -1100020,
         ];
     }
 }

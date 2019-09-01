@@ -36,7 +36,7 @@ class RegisterController extends Controller
 
     public function save(Request $request)
     {
-        $this->patientRepository0->create();
+        $this->patientRepository->create();
     }
 
     public function succeed()

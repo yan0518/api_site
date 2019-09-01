@@ -13,6 +13,7 @@
         "laravel/tinker": "~1.0",
         "league/fractal": "^0.17.0",
         "league/oauth2-server": "^7.0",
+        "overtrue/easy-sms": "^1.1",
         "overtrue/laravel-wechat": "~5.0",
         "prettus/l5-repository": "^2.6",
         "ramsey/uuid": "^3.8",

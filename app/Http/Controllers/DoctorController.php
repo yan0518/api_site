@@ -43,20 +43,30 @@ class DoctorController extends Controller
         $this->patients = $patients;
     }
 
-    public function list($id = 0) {
-        $params[] = ['status', '!=', Doctors::status_invalid];
-        if(!empty($id) && is_numeric($id)) {
-            $params[] = ['id', '=' ,$id];
-        }
-        $list = $this->doctor->findWhere($params)->all();
-        
-        if(is_null($list)){
-            $list = [];
-        }
-        return $this->SuccessResponse($list);
+    public function list(Request $request) {
+        $pageNum = $request->pageNum ?? 1;
+        $pageSize = $request->pageSize ?? 20;
+
+        $query = Doctors::where('status', '!=', Doctors::status_invalid);
+        $total = $query->count();
+        $list = $query->offset(($pageNum - 1)* $pageSize)
+                ->limit($pageSize)
+                ->get();
+       
+        return $this->SuccessResponse([
+            'total' => $total,
+            'list' => $list
+        ]);
+    }
+
+    public function info($id) {
+        $data = $this->doctor->find($id);
+
+        return $this->SuccessResponse($data);
     }
 
     public function create(DoctorRequest $request) {
+        Log::info('aaaa');
         $photo = '';
         if(!empty($request->photo)){
             //upload photo
@@ -114,37 +124,6 @@ class DoctorController extends Controller
             throw new DoctorAppException(-2100001);
         }
         $this->doctor->update(['status' => Doctors::status_invalid], $id);
-
-        return $this->SuccessResponse();
-    }
-
-    public function bind($uuid, Request $request) {
-        $doctor = $this->doctor->findWhere(['uuid' => $uuid])->first();
-        if(is_null($doctor)){
-            throw new DoctorAppException(-2100003);
-        }
-
-        $unionid = $request->unionid;
-        $patient = $this->patients->findWhere(['unionid' => $unionid])->first();
-        if(is_null($patient)){
-            throw new DoctorAppException(-2100003);
-        }
-
-        $doc_patient = $this->doctor_patients->findWhere([
-            'doctor_id' => $doctor->id,
-            'patient_id' => $patient->id,
-        ])->first();
-        if(is_null($doc_patient)) {
-            $this->doctor_patients->create([
-                'doctor_id' => $doctor->id,
-                'patient_id' => $patient->id,
-                'status' => DoctorPatients::status_valid
-            ]);
-        } else if($doctor_patients->status == DoctorPatients::status_invalid) {
-            $this->doctor_patients->update([
-                'status' => DoctorPatients::status_valid
-            ], $doc_patient->id);
-        }
 
         return $this->SuccessResponse();
     }

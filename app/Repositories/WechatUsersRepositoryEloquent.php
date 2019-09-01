@@ -6,8 +6,6 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\WechatUsersRepository;
 use App\Models\WechatUsers;
-use App\Models\Doctors;
-use App\Models\DoctorPatients;
 
 /**
  * Class WechatUsersRepositoryEloquent.
@@ -35,21 +33,4 @@ class WechatUsersRepositoryEloquent extends BaseRepository implements WechatUser
         $this->pushCriteria(app(RequestCriteria::class));
     }
     
-    public function getPatientList() {
-        return WechatUsers::where('wechat_users.status', WechatUsers::status_valid)
-            ->join('doctor_patients', function($join){
-                    $join->on('doctor_patients.patient_id', 'wechat_users.id')
-                        ->where('doctor_patients.status', DoctorPatients::status_valid);
-            })
-            ->join('doctors', function($join){
-                $join->on('doctor_patients.doctor_id', 'doctors.id')
-                    ->where('doctors.status', Doctors::status_valid);
-            })->select(
-                'wechat_users.id',
-                'wechat_users.nickname',
-                'wechat_users.cell',
-                'doctors.name',
-                'doctor_patients.created_at'
-            )->get();
-    }
 }
