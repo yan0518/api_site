@@ -196,9 +196,9 @@ return [
          * support template sms.
          */
         'Aliyun' => [
-            'accessKeyId'       => 'your_access_key_id',
-            'accessKeySecret'   => 'your_access_key_secret',
-            'signName'          => 'your_sms_sign_name',
+            'accessKeyId'       => env('ALIYUN_ACCESS_ID'),
+            'accessKeySecret'   => env('ALIYUN_ACCESS_KEY'),
+            'signName'          => env('ALIYUN_SIGN_NAME'),
             'regionId'          => 'cn-shenzhen',
         ],
     ],
