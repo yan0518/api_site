@@ -15,10 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
-    Route::get('/user', function () {
-        $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
-
-        dd($user);
-    });
-});
+Route::get('user/register/{docId}', 'RegisterController@index');
+Route::get('user/register_succeed', 'RegisterController@succeed');

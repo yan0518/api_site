@@ -192,6 +192,9 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         Overtrue\LaravelWeChat\ServiceProvider::class,
 
+        Toplan\PhpSms\PhpSmsServiceProvider::class,
+        Toplan\Sms\SmsManagerServiceProvider::class,
+
     ],
 
     /*
@@ -241,6 +244,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
+        'PhpSms' => Toplan\PhpSms\Facades\Sms::class,
+        'SmsManager' => Toplan\Sms\Facades\SmsManager::class,
+
     ],
 
 ];
