@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PatientRepositoryEloquent;
 use Illuminate\Http\Request;
 use App\Exceptions\DoctorAppException;
 use App\Http\Controllers\Controller;
@@ -16,18 +17,26 @@ use Illuminate\View\View;
 class RegisterController extends Controller
 {
 
+    protected $patientRepository;
+
     /**
      * UsersController constructor.
      *
      * @param UsersRepositoryEloquent $repository
      */
-    public function __construct()
+    public function __construct(PatientRepositoryEloquent $patientRepository)
     {
+        $this->patientRepository = $patientRepository;
     }
 
     public function index()
     {
         return View('register');
+    }
+
+    public function save(Request $request)
+    {
+        $this->patientRepository0->create();
     }
 
     public function succeed()
