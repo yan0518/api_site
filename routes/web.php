@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+// 用户注册
+Route::get('user/register/{docId}', 'RegisterController@index');
