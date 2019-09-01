@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
+
 /**
- * Class Patient.
+ * Class Verifycode.
  *
  * @package namespace App\Models;
  */
-class Patient extends Model implements Transformable
+class Verifycode extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -20,10 +21,13 @@ class Patient extends Model implements Transformable
      *
      * @var array
      */
-    protected $table = 'patients';
+    protected $table = 'verifycode';
+
     protected $guarded = [];
 
-    const status_invalid = 0;
+    const status_delete = 0;
     const status_valid = 1;
+    const status_used = 2;
+    const status_disabled = 3;
 
 }

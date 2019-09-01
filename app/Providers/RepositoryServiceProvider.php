@@ -27,6 +27,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\CreateDoctorsTableRepository::class, \App\Repositories\CreateDoctorsTableRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\CreateWechatUsersTableRepository::class, \App\Repositories\CreateWechatUsersTableRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\CreateDoctorPatientsTableRepository::class, \App\Repositories\CreateDoctorPatientsTableRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\VerifycodeRepository::class, \App\Repositories\VerifycodeRepositoryEloquent::class);
         //:end-bindings:
     }
 }
