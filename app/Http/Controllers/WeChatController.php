@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use EasyWeChat;
 
 use EasyWeChat\Kernel\Messages\News;
+use EasyWeChat\Kernel\Messages\NewsItem;
 use Log;
 
 class WeChatController extends Controller
@@ -27,13 +28,17 @@ class WeChatController extends Controller
                 case 'event':
                     break;
                 case 'text':
-                    $a[] = new News([
-                        'title' => '【外卖优惠共享】全新大改版',
-                        'description' => '提高用户体验，大大提高【手气红包】概率',
-                        'url' => 'http://mp.weixin.qq.com/s/Ic87Hm4ecKewfG8ZUTTfXg',
-                        'image' => 'http://www.3dmgame.com/uploads/allimg/171029/154_171029171922_1.jpg',
-                    ]);
-                    return $a;
+                    $items = [
+                        new NewsItem([
+                            'title' => '【外卖优惠共享】全新大改版',
+                            'description' => '提高用户体验，大大提高【手气红包】概率',
+                            'url' => 'http://mp.weixin.qq.com/s/Ic87Hm4ecKewfG8ZUTTfXg',
+                            'image' => 'http://www.3dmgame.com/uploads/allimg/171029/154_171029171922_1.jpg',
+                            // ...
+                        ]),
+                    ];
+                    $news = new News($items);
+                    return $news;
                     break;
                 case 'image':
                     # 图片消息...
