@@ -8,6 +8,7 @@ use EasyWeChat;
 
 use EasyWeChat\Kernel\Messages\News;
 use EasyWeChat\Kernel\Messages\NewsItem;
+use EasyWeChat\Kernel\Messages\Text;
 use Log;
 
 class WeChatController extends Controller
@@ -56,6 +57,7 @@ class WeChatController extends Controller
                 break;
             //取消订阅
             case 'unsubscribe':
+
                 $this->UnsubscribeProcess($openid);
                 return '欢迎取消';
                 break;
@@ -106,6 +108,8 @@ class WeChatController extends Controller
                     return self::EventProcess($message);
                     break;
                 case 'text':
+                    return new Text('您好！overtrue。');
+
                     $items = [
                         new NewsItem([
                             'title' => '【外卖优惠共享】全新大改版',
