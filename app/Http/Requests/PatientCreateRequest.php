@@ -25,16 +25,13 @@ class PatientCreateRequest extends FormRequest
     {
         return [
             'cell' => 'bail|required|digits:11',
-            'type' => 'bail|required|integer',
         ];
     }
 
     public function messages(){
         return [
             'cell.required' => -1100017,
-            'cell.digits'   => -1100018,
-            'type.required' => -1100024,
-            'type.integer'  => -1100025,
+            'cell.digits'   => -1100018
         ];
     }
 }

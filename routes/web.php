@@ -17,3 +17,6 @@ Route::get('/', function () {
 
 Route::get('user/register/{docId}', 'RegisterController@index');
 Route::get('user/register_succeed', 'RegisterController@succeed');
+
+
+Route::post('user/register', 'RegisterController@save');

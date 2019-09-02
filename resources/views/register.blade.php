@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>患者报名</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{env('APP_URL')}}/js/rem.js"></script>
     <link rel="stylesheet" href="{{env('APP_URL')}}/APP_URLcss/ResetCss.css">
     <link rel="stylesheet" href="{{env('APP_URL')}}/css/index.css">
@@ -12,7 +13,7 @@
 </head>
 <body style="background: #f3f3f3;">
 <div class="content">
-    <img src="{{env('APP_URL')}}/img/未注册绑定微信copy-banner图@3x.png" class="banner">
+    <img src="{{env('APP_URL')}}/img/banner.png" class="banner">
     <div class="userForm">
         <div class="tips"><span class="asterisk">*</span>号标注为必填项</div>
         <div class="name">
@@ -140,31 +141,39 @@
                 return false
             }
 
-            // post a JSON payload:
-            $.post('/api/sms/send', JSON.stringify({
-                "cell": phoneNum,
-                "type": 1,
-            }), function (data) {
-                let res = data;
-                if (res.code !== 1) {
-                    $('.showText').html('验证码发送失败！')
-                    $('#shade').css('display', 'block')
-                    $('#modal').css('display', 'block')
-                    $('.getNums').removeAttr("disabled")
-                    return false
-                } else {
-                    var count = 60;
-                    let timer = setInterval(() => {
-                        count--;
-                        if (count > 0) {
-                            $('.getNums').attr({"disabled": "disabled"}).css({background: '#CACACA'})[0].innerHTML = count + 's后' + '重新获取'
-                        } else {
-                            $('.getNums').removeAttr("disabled").css({background: '#F67710'})[0].innerHTML = '获取';
-                            clearInterval(timer)
-                        }
-                    }, 1000);
+            $.ajax({
+                type: 'POST',
+                url: '/api/sms/send',
+                data: JSON.stringify({
+                    "cell": phoneNum,
+                    "type": 1,
+                }),
+                contentType: 'application/json',
+                success: function (data) {
+                    let res = data;
+                    if (res.code !== 1) {
+                        $('.showText').html('验证码发送失败！')
+                        $('#shade').css('display', 'block')
+                        $('#modal').css('display', 'block')
+                        $('.getNums').removeAttr("disabled")
+                        return false
+                    } else {
+                        var count = 60;
+                        let timer = setInterval(() => {
+                            count--;
+                            if (count > 0) {
+                                $('.getNums').attr({"disabled": "disabled"}).css({background: '#CACACA'})[0].innerHTML = count + 's后' + '重新获取'
+                            } else {
+                                $('.getNums').removeAttr("disabled").css({background: '#F67710'})[0].innerHTML = '获取';
+                                clearInterval(timer)
+                            }
+                        }, 1000);
+                    }
+                },
+                error: function (error, type) {
+                    alert(error.response)
+                    $(this).removeAttr("disabled")
                 }
-
             })
 
         })
@@ -226,88 +235,38 @@
                 return false
             }
 
-            if ($('#agreement').data('waschecked') != true) {
-                $('.showText').html('请同意勾选协议！')
-                $('#shade').css('display', 'block')
-                $('#modal').css('display', 'block')
-                return false
-            }
 
             $(this).attr({"disabled": "disabled"})
 
             let userInfo = {
+                "uuid": "{{$docId}}",
                 "name": name,
                 "sex": sex,
                 "bday": bday,
                 "cell": phoneNum,
                 "code": "",
             };
-            let postUser = [];
-            postUser.push(userInfo);
-            //入组
-            $.post('/api/sms/validate', JSON.stringify({
-                "cell": phoneNum,
-                "code": verificationCode,
-            }), function (data) {
 
-                let res = $.parseJSON(data);
-                if (res.code == -1) {
-                    $('.showText').html(res.message)
-                    $('#shade').css('display', 'block')
-                    $('#modal').css('display', 'block')
-                    $(that).removeAttr("disabled")
-                } else {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/patient/updateInfo',
-                        // post payload:
-                        data: JSON.stringify({data: postUser, from: 2}),
-                        contentType: 'application/json',
-                        success: function (res2) {
-                            let res = $.parseJSON(res2);
-                            if (res.code == -1) {
-                                $('.showText').html(res.message)
-                                $('#shade').css('display', 'block')
-                                $('#modal').css('display', 'block')
-                                $(that).removeAttr("disabled")
-                            } else {
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/MMCButler/mmcButler/updateWechatUserId',
-                                    // post payload:
-                                    data: JSON.stringify({
-                                        "cell": phoneNum
-                                    }),
-                                    contentType: 'application/json',
-                                    success: function (res3) {
-                                        if (res3.code != 1) {
-                                            $('.showText').html('注册失败，请联系管理员')
-                                            $('#shade').css('display', 'block')
-                                            $('#modal').css('display', 'block')
-                                            $(that).removeAttr("disabled")
-                                        } else {
-                                            window.location.href = "/MMCButler/mmcButler/registerSuccess";
-                                        }
-                                        $(that).removeAttr("disabled")
-                                    },
-                                    error: function (error) {
-                                        alert(error);
-                                        $(that).removeAttr("disabled")
-                                    }
-
-                                })
-                            }
-                        },
-                        error: function (error) {
-                            alert(error);
-                            $(that).removeAttr("disabled")
-                        }
-                    })
+            let _self=$(this)
+            $.ajax({
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/user/register',
+                data: JSON.stringify(userInfo),
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log(data)
+                    _self.removeAttr("disabled")
+                },
+                error: function (error, type) {
+                    alert(error.response)
+                    _self.removeAttr("disabled")
                 }
             })
 
         });
-
 
 
         $('#closeModal').click(function () {
