@@ -23,6 +23,3 @@ Route::post('user/register', 'RegisterController@save');
 
 Route::any('wechat', 'WeChatController@Connection');
 
-
-
-Route::any('/wechat', 'WeChatController@serve');
