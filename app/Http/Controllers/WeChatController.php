@@ -29,6 +29,7 @@ class WeChatController extends Controller
      */
     public function EventProcess($message)
     {
+        return '欢迎关注';
         $openid = $message->FromUserName;
         switch ($message->Event) {
             //订阅
@@ -108,7 +109,15 @@ class WeChatController extends Controller
                     return self::EventProcess($message);
                     break;
                 case 'text':
-
+                    $items = [
+                        new NewsItem([
+                            'title' => '欢迎报名绑定',
+                            'description' => '',
+                            'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
+                            'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
+                        ]),
+                    ];
+                    return new News($items);
                     break;
                 case 'image':
 

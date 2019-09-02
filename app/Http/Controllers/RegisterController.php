@@ -45,16 +45,13 @@ class RegisterController extends Controller
         $this->verify_code = $verify_code;
     }
 
-    public function index()
+    public function index($docId)
     {
-        $docId = 'bd6325a5-27b8-47d6-8dc1-25be757ae94f';
         return View('register', compact('docId'));
     }
 
     public function save(PatientCreateRequest $request)
     {
-
-
         $code_type = 1;
         $valid_time = 300;
         $verify_info = $this->verify_code->findWhere([
