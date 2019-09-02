@@ -29,7 +29,8 @@ class WeChatController extends Controller
      */
     public function EventProcess($message)
     {
-        return $message->FromUserName;
+
+        return json_encode($message);
         $openid = $message->FromUserName;
         switch ($message->Event) {
             //订阅
