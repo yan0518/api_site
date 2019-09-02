@@ -42,7 +42,7 @@ class RegisterController extends Controller
 
     public function index()
     {
-        $docId = 1;
+        $docId = 'bd6325a5-27b8-47d6-8dc1-25be757ae94f';
         return View('register', compact('docId'));
     }
 

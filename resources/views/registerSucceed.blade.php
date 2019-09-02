@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="content1">
-    <img src="{{env('APP_URL')}}/img/未注册绑定微信copy-banner图@3x.png" class="banner">
+    <img src="{{env('APP_URL')}}/img/banner.png" class="banner">
 
     <img src="{{env('APP_URL')}}/img/注册成功引导页-背景图标@3x.png" class="successBackground">
     <img src="{{env('APP_URL')}}/img/注册成功引导页-加入我们@3x.png" class="joinUs">
