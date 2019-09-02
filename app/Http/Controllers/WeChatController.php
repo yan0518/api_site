@@ -29,7 +29,7 @@ class WeChatController extends Controller
      */
     public function EventProcess($message)
     {
-        return '欢迎关注';
+        return $message->FromUserName;
         $openid = $message->FromUserName;
         switch ($message->Event) {
             //订阅
