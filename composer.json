@@ -17,7 +17,8 @@
         "overtrue/laravel-wechat": "~5.0",
         "prettus/l5-repository": "^2.6",
         "ramsey/uuid": "^3.8",
-        "toplan/laravel-sms": "^2.6"
+        "toplan/laravel-sms": "^2.6",
+        "olivefm/laravel-oss": "~3.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

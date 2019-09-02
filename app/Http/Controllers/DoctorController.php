@@ -61,16 +61,16 @@ class DoctorController extends Controller
 
     public function info($id) {
         $data = $this->doctor->find($id);
+        $data->photo = Storage::disk('oss')->url($data->photo);
 
         return $this->SuccessResponse($data);
     }
 
     public function create(DoctorRequest $request) {
-        \Log::info('aaaa');
         $photo = '';
         if(!empty($request->photo)){
             //upload photo
-            $photo = Storage::disk('local')->putFile('photos/'.microtime(), $request->photo);
+            $photo = Storage::disk('oss')->put('photos/'.Uuid::uuid4(), $request->photo);
         }
         $data = [
             'name' => $request->name,
@@ -91,8 +91,8 @@ class DoctorController extends Controller
 
     public function update(DoctorEditRequest $request) {
         $data = [
-            'saler' => $request->saler,
-            'sale_cell' => $request->sale_cell
+            'saler' => $request->saler ?? '',
+            'sale_cell' => $request->sale_cell ?? ''
         ];
         if(!empty($request->name)){
             $data['name'] = $request->name;
