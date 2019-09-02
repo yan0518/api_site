@@ -110,27 +110,15 @@ class WeChatController extends Controller
                     return self::EventProcess($message);
                     break;
                 case 'text':
-
-                    $a[] = new News([
-                        'title' => '',
-                        'description' => '',
-                        'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
-                        'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
-                    ]);
-
-                    $a[] = new News([
-                        'title' => '',
-                        'description' => '',
-                        'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
-                        'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
-                    ]);
-                    $a[] = new News([
-                        'title' => '分享使用手册',
-                        'description' => '欢迎使用[Luck红包],红包发一返四，60%的有机会获得【手气红包】哦！',
-                        'url' => 'http://mp.weixin.qq.com/s/VBCTZrGt6CLNOkdnhu9v_w',
-                        'image' => 'https://mmbiz.qpic.cn/mmbiz_jpg/g7lYvtuuZFKPKKwpwwQXNF2T2z0TbcPuPj9TN8icQ85tKbBxA9Z1UNmmQ6d6yBJLqjsickGSibGEnACOOr4zIzEvQ/0?wx_fmt=jpeg',
-                    ]);
-                    return $a;
+                    $items[] = [
+                        new NewsItem([
+                            'title' => '微信绑定',
+                            'description' => '',
+                            'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
+                            'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
+                        ])
+                    ];
+                    return new News($items);
                     break;
                 case 'image':
 
