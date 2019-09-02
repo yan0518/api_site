@@ -6,8 +6,8 @@
     <title>患者报名</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{env('APP_URL')}}/js/rem.js"></script>
-    <link rel="stylesheet" href="{{env('APP_URL')}}/APP_URLcss/ResetCss.css">
-    <link rel="stylesheet" href="{{env('APP_URL')}}/css/index.css">
+    <link rel="stylesheet" href="{{env('APP_URL')}}/css/ResetCss.css">
+    <link rel="stylesheet" href="{{env('APP_URL')}}/css/index.css?v2">
     <script src="{{env('APP_URL')}}/js/zepto.js"></script>
     <script src="{{env('APP_URL')}}/js/svgxuse.js"></script>
 </head>
