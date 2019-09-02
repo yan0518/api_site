@@ -19,7 +19,7 @@ class WeChatController extends Controller
     public function Connection(Request $request)
     {
 
-        $wechat =app('wechat.official_account');
+        $wechat = app('wechat.official_account');
         $wechat->server->setMessageHandler(function ($message) use ($wechat) {
             log::info($message);
             switch ($message->MsgType) {
@@ -27,8 +27,7 @@ class WeChatController extends Controller
                     break;
                 case 'text':
                     break;
-                case
-                'image':
+                case 'image':
                     # 图片消息...
                     break;
                 case 'voice':
@@ -54,15 +53,15 @@ class WeChatController extends Controller
 //        Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
 
         $app = app('wechat.official_account');
-//        $app->server->push(function($message){
-//            return "欢迎关注 overtrue！";
-//        });
+        $app->server->push(function($message){
+            return "欢迎关注！";
+        });
         return $app->server->serve();
-        die;
 
     }
 
-    public function qrcode($uuid) {
+    public function qrcode($uuid)
+    {
         $wechat = app('wechat.official_account');
         $result = $wechat->qrcode->forever($uuid);
 
