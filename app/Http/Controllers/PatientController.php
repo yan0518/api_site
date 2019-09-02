@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Exceptions\SmartAppException;
 use App\Http\Controllers\Controller;
 use App\Repositories\PatientRepositoryEloquent;
-use App\Http\Requests\DoctorRequest;
-use App\Http\Requests\DoctorEditRequest;
 use Illuminate\Support\Facades\Storage;
 
 /**
