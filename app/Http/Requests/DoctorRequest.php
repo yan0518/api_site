@@ -29,8 +29,8 @@ class DoctorRequest extends FormRequest
             'department' => 'bail|required|integer',
             'position'   => 'bail|required|integer',
             'cell'       => 'bail|required|digits:11',
-            'saler'      => 'bail|sometimes|string',
-            'sale_cell'  => 'bail|sometimes|digits:11'
+            'saler'      => 'bail|nullable|string',
+            'sale_cell'  => 'bail|nullable|digits:11'
         ];
     }
 

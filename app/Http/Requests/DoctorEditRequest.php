@@ -25,13 +25,13 @@ class DoctorEditRequest extends FormRequest
     {
         return [
             'id'         => 'bail|required|integer',
-            'name'       => 'bail|sometimes|string',
-            'hospital'   => 'bail|sometimes|string',
-            'department' => 'bail|sometimes|integer',
-            'position'   => 'bail|sometimes|integer',
-            'cell'       => 'bail|sometimes|digits:11',
-            'saler'      => 'bail|sometimes|string',
-            'sale_cell'  => 'bail|sometimes|digits:11'
+            'name'       => 'bail|nullable|string',
+            'hospital'   => 'bail|nullable|string',
+            'department' => 'bail|nullable|integer',
+            'position'   => 'bail|nullable|integer',
+            'cell'       => 'bail|nullable|digits:11',
+            'saler'      => 'bail|nullable|string',
+            'sale_cell'  => 'bail|nullable|digits:11'
         ];
     }
 

@@ -48,13 +48,5 @@ class VerifycodeRepositoryEloquent extends BaseRepository implements VerifycodeR
         return $this->model->where('id', $id)
                     ->update(['status' => Verifycode::status_used, 'verify_at' => Carbon::now()]);
     }
-
-    public function check1MinVerifyCode($type, $cell){
-        return $this->model->where('cell', $cell)
-                    ->where('type', $type)
-                    ->where('status', Verifycode::status_valid)
-                    ->where('created_at', '>=', date('Y-m-d H:i:s', time() - 60))
-                    ->first();
-    }
     
 }

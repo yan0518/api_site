@@ -66,7 +66,7 @@ class DoctorController extends Controller
     }
 
     public function create(DoctorRequest $request) {
-        Log::info('aaaa');
+        \Log::info('aaaa');
         $photo = '';
         if(!empty($request->photo)){
             //upload photo
@@ -78,8 +78,8 @@ class DoctorController extends Controller
             'department' => $request->department,
             'position' => $request->position,
             'cell' => $request->cell,
-            'saler' => $request->saler,
-            'sale_cell' => $request->sale_cell,
+            'saler' => $request->saler ?? '',
+            'sale_cell' => $request->sale_cell ?? '',
             'photo' => $photo,
             'uuid' => Uuid::uuid4(),
             'status' => Doctors::status_valid

@@ -7,9 +7,9 @@ use App\Exceptions\DoctorAppException;
 use App\Http\Controllers\Controller;
 use App\Repositories\VerifycodeRepositoryEloquent;
 use App\Http\Requests\SmsRequest;
+use App\Http\Requests\VerifyCodeRequest;
 use App\Common\SMS\Sms;
 use App\Models\Verifycode;
-
 /**
  * Class UsersController.
  *
@@ -78,5 +78,31 @@ class SmsController extends Controller
         return $this->SuccessResponse();
     }
 
+    public function verify(VerifyCodeRequest $request){
+        $code_type = 1;
+        $valid_time = 300;
+        $verify_info = $this->verify_code->findWhere([
+                'cell' => $request->cell, 
+                'type' => $code_type, 
+                'code' => $request->verify_code,
+                'status' => Verifycode::status_valid,
+            ])->first();
+
+        if(!is_null($verify_info)){
+            if($verify_info->created_at <= date('Y-m-d H:i:s', time() - $valid_time)){
+                $this->verify_code->find($verify_info->id)->update([
+                    'status' => Verifycode::status_delete,
+                ]);
+                throw new DoctorAppException(-2100006);
+            }
+
+            $rst = $this->verify_code->usedVerifyCode($verify_info->id);
+            if($rst){
+                return $this->SuccessResponse();
+            }
+            throw new DoctorAppException(-9999999);
+        }
+        throw new DoctorAppException(-2100005);
+    }
 
 }

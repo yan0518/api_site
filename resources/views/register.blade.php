@@ -142,24 +142,16 @@
 
             // post a JSON payload:
             $.post('/api/sms/send', JSON.stringify({
-                "phone": phoneNum,
-                "templateType": "6",
-                "from": "2"
+                "cell": phoneNum,
+                "type": 1,
             }), function (data) {
                 let res = data;
-                if (res.code == -1) {
-                    if (res.message.indexOf('手机号') >= 0) {
-                        $('#shade').css('display', 'block')
-                        $('#modal').css('display', 'block')
-                        $('.getNums').removeAttr("disabled")
-                        return false
-                    } else {
-                        $('.showText').html('验证码发送失败！')
-                        $('#shade').css('display', 'block')
-                        $('#modal').css('display', 'block')
-                        $('.getNums').removeAttr("disabled")
-                        return false
-                    }
+                if (res.code !== 1) {
+                    $('.showText').html('验证码发送失败！')
+                    $('#shade').css('display', 'block')
+                    $('#modal').css('display', 'block')
+                    $('.getNums').removeAttr("disabled")
+                    return false
                 } else {
                     var count = 60;
                     let timer = setInterval(() => {
@@ -248,21 +240,14 @@
                 "sex": sex,
                 "bday": bday,
                 "cell": phoneNum,
-                "barcode": "",
-                "sfzid": "",
-                "sbkid": "",
-                "magcardid": "",
-                "admissionno": "",
-                "code_type": "5",
-                "create_at": new Date().format("yyyy-MM-dd HH:mm:ss")
+                "code": "",
             };
             let postUser = [];
             postUser.push(userInfo);
             //入组
             $.post('/api/sms/validate', JSON.stringify({
-                "phone": phoneNum,
+                "cell": phoneNum,
                 "code": verificationCode,
-                "templateType": "6"
             }), function (data) {
 
                 let res = $.parseJSON(data);
@@ -274,7 +259,7 @@
                 } else {
                     $.ajax({
                         type: 'POST',
-                        url: '/api/patient/updateInfo',
+                        url: '/patient/updateInfo',
                         // post payload:
                         data: JSON.stringify({data: postUser, from: 2}),
                         contentType: 'application/json',
