@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     // 用户一览
     Route::get('patient/list', 'PatientController@list');
+
+    // 获取微信二维码
+    Route::get('wechat/qrcode/{uuid}', 'WechatController@qrcode');
 });
 
 Route::post('sms/send', 'SmsController@send');

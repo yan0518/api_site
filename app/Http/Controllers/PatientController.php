@@ -33,7 +33,10 @@ class PatientController extends Controller
     public function list(Request $request) {
         $pageNum = $request->pageNum ?? 1;
         $pageSize = $request->pageSize ?? 20;
-        $data = $this->patients->getPatientList($pageNum, $pageSize);
+        $params = $request->searchKey ?? '';
+
+        $data = $this->patients->getPatientList($pageNum, $pageSize, $params);
+        
         if(is_null($data)){
             $data = [];
         }
