@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\patientRepository;
+use App\Repositories\PatientRepository;
 use App\Models\Patient;
 use App\Models\Doctors;
 use App\Models\DoctorPatients;
