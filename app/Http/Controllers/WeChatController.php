@@ -99,43 +99,39 @@ class WeChatController extends Controller
      */
     public function Connection(Request $request)
     {
-
         $wechat = app('wechat.official_account');
-        $wechat->server->setMessageHandler(function ($message) use ($wechat) {
-            log::info($message);
-            switch ($message->MsgType) {
+        $wechat->server->push(function ($message) {
+            switch ($message['MsgType']) {
                 case 'event':
                     return self::EventProcess($message);
                     break;
                 case 'text':
-                    return "小哥哥小姐姐好，商务合作请联系 411080515@qq.com ,谢谢！";
-//                    new Text('您好！overtrue。');
-
-//                    $items = [
-//                        new NewsItem([
-//                            'title' => '【外卖优惠共享】全新大改版',
-//                            'description' => '提高用户体验，大大提高【手气红包】概率',
-//                            'url' => 'http://mp.weixin.qq.com/s/Ic87Hm4ecKewfG8ZUTTfXg',
-//                            'image' => 'http://www.3dmgame.com/uploads/allimg/171029/154_171029171922_1.jpg'
-//                        ]),
-//                    ];
-//                    $news = new News($items);
-//                    return $news;
+                    return '收到文字消息';
                     break;
                 case 'image':
-                    # 图片消息...
+                    return '收到图片消息';
                     break;
                 case 'voice':
-                    # 语音消息...
+                    return '收到语音消息';
+                    break;
+                case 'video':
+                    return '收到视频消息';
+                    break;
+                case 'location':
+                    return '收到坐标消息';
                     break;
                 case 'link':
+                    return '收到链接消息';
                     break;
+                case 'file':
+                    return '收到文件消息';
+                // ... 其它消息
                 default:
-                    # code...
+                    return '收到其它消息';
                     break;
             }
+
         });
-        return $wechat->server->serve();
     }
 
     /**
