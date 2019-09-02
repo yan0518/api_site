@@ -52,10 +52,7 @@ class WeChatController extends Controller
 
                 $this->wechatUserRepository->updateOrCreate(['openID' => $openid], $data);
 
-
-//                $material = new Material('mpnews', '1DFH_WiaEfYx78B03Or01B_ekoF_sXi3x7xNrF9Cz5g');
-//                Log::info($material);
-//                return $material;
+                return '欢迎关注';
                 break;
             //取消订阅
             case 'unsubscribe':
@@ -78,6 +75,18 @@ class WeChatController extends Controller
                 # code...
                 break;
         }
+        return NULL;
+    }
+
+    /**
+     * 用户取消关注
+     * @param $message
+     * @return null
+     */
+    private function UnsubscribeProcess($openid)
+    {
+        $user_info = $this->wechatUserRepository->findWhere(['openID' => $openid])->first();
+        $this->wechatUserRepository->update(['subscribe' => 0], $user_info->id);
         return NULL;
     }
 
