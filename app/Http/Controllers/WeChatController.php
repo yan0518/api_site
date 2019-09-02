@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use EasyWeChat;
+
 use Log;
 
 class WeChatController extends Controller
@@ -22,5 +26,14 @@ class WeChatController extends Controller
         });
 
         return $app->server->serve();
+    }
+
+    public function qrcode($uuid) {
+        $wechat = app('wechat.official_account');
+        $result = $wechat->qrcode->forever($uuid);
+
+        $url = $result->url ?? 'http://www.pigzu.com';
+
+        return $this->SuccessResponse($url);
     }
 }
