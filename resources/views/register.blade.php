@@ -141,6 +141,7 @@
                 return false
             }
 
+            let _self= $(this)
             $.ajax({
                 type: 'POST',
                 url: '/api/sms/send',
@@ -171,8 +172,9 @@
                     }
                 },
                 error: function (error, type) {
-                    alert(error.response)
-                    $(this).removeAttr("disabled")
+                    let resERROR = $.parseJSON(error.response)
+                    alert(resERROR.error)
+                    _self.removeAttr("disabled")
                 }
             })
 
@@ -244,10 +246,10 @@
                 "sex": sex,
                 "bday": bday,
                 "cell": phoneNum,
-                "verify_code":verificationCode ,
+                "verify_code": verificationCode,
             };
 
-            let _self=$(this)
+            let _self = $(this)
             $.ajax({
                 type: 'POST',
                 headers: {
@@ -257,11 +259,16 @@
                 data: JSON.stringify(userInfo),
                 contentType: 'application/json',
                 success: function (data) {
-                    window.location.href = "/user/register_succeed";
-                    _self.removeAttr("disabled")
+                    let res = data;
+                    if (res.code === 1) {
+                        window.location.href = "/user/register_succeed";
+                        _self.removeAttr("disabled")
+                    }
                 },
                 error: function (error, type) {
-                    alert(error.response)
+
+                    let resERROR = $.parseJSON(error.response)
+                    alert(resERROR.error)
                     _self.removeAttr("disabled")
                 }
             })

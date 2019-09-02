@@ -81,7 +81,6 @@ class RegisterController extends Controller
             throw new DoctorAppException(-2100005);
         }
 
-
         $uuid = $request->uuid;
         $doctor = $this->doctor->findWhere(['uuid' => $uuid])->first();
         if (is_null($doctor)) {
