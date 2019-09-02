@@ -244,7 +244,7 @@
                 "sex": sex,
                 "bday": bday,
                 "cell": phoneNum,
-                "code": "",
+                "verify_code":verificationCode ,
             };
 
             let _self=$(this)
