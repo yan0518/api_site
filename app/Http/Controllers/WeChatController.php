@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\WechatUsersRepositoryEloquent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use EasyWeChat;
@@ -15,7 +16,7 @@ class WeChatController extends Controller
 {
 
 
-    public function __construct(WechatUserRepositoryEloquent $wechatUserRepository)
+    public function __construct(WechatUsersRepositoryEloquent $wechatUserRepository)
     {
         $this->wechatUserRepository = $wechatUserRepository;
     }
