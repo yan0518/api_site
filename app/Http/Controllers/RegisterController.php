@@ -54,6 +54,7 @@ class RegisterController extends Controller
     public function save(PatientCreateRequest $request)
     {
 
+
         $code_type = 1;
         $valid_time = 300;
         $verify_info = $this->verify_code->findWhere([
@@ -65,13 +66,16 @@ class RegisterController extends Controller
 
         if (!is_null($verify_info)) {
             if ($verify_info->created_at <= date('Y-m-d H:i:s', time() - $valid_time)) {
+
                 $this->verify_code->find($verify_info->id)->update([
                     'status' => Verifycode::status_delete,
                 ]);
+
                 throw new DoctorAppException(-2100006);
             }
 
             $this->verify_code->usedVerifyCode($verify_info->id);
+
 
         } else {
             throw new DoctorAppException(-2100005);
