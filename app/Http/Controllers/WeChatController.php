@@ -112,7 +112,7 @@ class WeChatController extends Controller
                 case 'text':
                     $items[] = [
                         new NewsItem([
-                            'title' => '',
+                            'title' => '微信绑定',
                             'description' => '',
                             'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
                             'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
