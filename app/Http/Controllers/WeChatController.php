@@ -92,15 +92,16 @@ class WeChatController extends Controller
         return NULL;
     }
 
+
     /**
-     * 微信服务器连接
-     * @param Request $request
-     * @return mixed
+     * 处理微信的请求消息
+     *
+     * @return string
      */
-    public function Connection(Request $request)
+    public function serve()
     {
-        $wechat = app('wechat.official_account');
-        $wechat->server->push(function ($message) {
+        $app = app('wechat.official_account');
+        $app->server->push(function ($message) {
             switch ($message['MsgType']) {
                 case 'event':
                     return self::EventProcess($message);
@@ -125,28 +126,12 @@ class WeChatController extends Controller
                     break;
                 case 'file':
                     return '收到文件消息';
-                // ... 其它消息
                 default:
                     return '收到其它消息';
                     break;
             }
 
         });
-    }
-
-    /**
-     * 处理微信的请求消息
-     *
-     * @return string
-     */
-    public function serve()
-    {
-//        Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
-
-        $app = app('wechat.official_account');
-////        $app->server->push(function($message){
-////            return "欢迎关注！";
-//        });
         return $app->server->serve();
 
     }
