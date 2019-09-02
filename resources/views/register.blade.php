@@ -257,7 +257,7 @@
                 data: JSON.stringify(userInfo),
                 contentType: 'application/json',
                 success: function (data) {
-                    console.log(data)
+                    window.location.href = "/user/register_succeed";
                     _self.removeAttr("disabled")
                 },
                 error: function (error, type) {
