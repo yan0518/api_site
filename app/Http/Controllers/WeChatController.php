@@ -110,21 +110,25 @@ class WeChatController extends Controller
                     return self::EventProcess($message);
                     break;
                 case 'text':
-                    $items = [
+                    $items[] = [
                         new NewsItem([
                             'title' => '',
                             'description' => '',
                             'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
                             'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
-                        ]),
-                        new NewsItem([
-                            'title' => '欢迎报名绑定',
-                            'description' => '',
-                            'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
-                            'image' => '',
                         ])
                     ];
-                    return new News($items);
+                    $a[] = new News($items);
+                    $items[] = [
+                        new NewsItem([
+                            'title' => '',
+                            'description' => '',
+                            'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
+                            'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
+                        ])
+                    ];
+                    $a[] = new News($items);
+                    return $a;
                     break;
                 case 'image':
 
