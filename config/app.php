@@ -196,6 +196,7 @@ return [
         Toplan\Sms\SmsManagerServiceProvider::class,
         
         OliveFM\AliOSS\AliOssServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 

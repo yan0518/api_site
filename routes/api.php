@@ -11,13 +11,13 @@
 |
 */
 
-Route::group(['namespace' => 'OAuth'], function () {
+Route::group(['namespace' => 'OAuth', 'middleware' => 'cors'], function () {
     Route::post('oauth/access_token', 'LoginController@login')->name('oauth.token');
     Route::post('oauth/refresh_token', 'LoginController@login')->name('oauth.token');
     Route::get('oauth/logout', 'LoginController@logout')->middleware('auth:api');
 });
 
-Route::group(['middleware' => ['auth:api']], function(){
+Route::group(['middleware' => ['auth:api', 'cors']], function(){
     // 管理员账号信息
     Route::get('user/info', 'UsersController@info');
 
