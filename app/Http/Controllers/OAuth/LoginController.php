@@ -36,7 +36,7 @@ class LoginController extends AccessTokenController
                 throw new OauthException(-1100005);
             } else if ($e->getCode() === 6) {
                 //用户认证失败
-                throw new OauthException(-2100001);
+                throw new OauthException(-2100007);
             } else {
                 //服务错误
                 throw new OauthException(-9999999);
@@ -44,7 +44,6 @@ class LoginController extends AccessTokenController
         } catch (\Exception $e) {
             throw new OauthException(-9999999);
         } catch (\Throwable $e) {
-            dump($e);
             throw new OauthException(-9999999);
         }
     }
