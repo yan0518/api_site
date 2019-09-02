@@ -108,7 +108,15 @@ class WeChatController extends Controller
                     return self::EventProcess($message);
                     break;
                 case 'text':
-
+                    $items = [
+                        new NewsItem([
+                            'title' => '欢迎报名绑定',
+                            'description' => '',
+                            'url' => 'http://api.pigzu.com/user/register/1',
+                            'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
+                        ]),
+                    ];
+                    return new News($items);
                     break;
                 case 'image':
 
