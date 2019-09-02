@@ -4,9 +4,10 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\patientRepository;
+use App\Repositories\PatientRepository;
 use App\Models\Patient;
-use App\Validators\PatientValidator;
+use App\Models\Doctors;
+use App\Models\DoctorPatients;
 
 /**
  * Class PatientRepositoryEloquent.
@@ -33,6 +34,32 @@ class PatientRepositoryEloquent extends BaseRepository implements PatientReposit
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function getPatientList($pageNum, $pageSize) {
+        $query = Patient::where('patients.status', Patient::status_valid)
+            ->join('doctor_patients', function($join){
+                    $join->on('doctor_patients.patient_id', 'patients.id')
+                        ->where('doctor_patients.status', DoctorPatients::status_valid);
+            })
+            ->join('doctors', function($join){
+                $join->on('doctor_patients.doctor_id', 'doctors.id')
+                    ->where('doctors.status', Doctors::status_valid);
+            })->select(
+                'patients.id',
+                'patients.name',
+                'patients.cell',
+                'doctors.name as doctor_name',
+                'doctor_patients.created_at'
+            );
+        $total = $query->count();
+        $list = $query->offset(($pageNum - 1) * $pageSize)
+            ->limit($pageSize)
+            ->get();
+        return [
+            'total' => $total,
+            'list' => $list
+        ];
     }
     
 }

@@ -25,13 +25,13 @@ class DoctorEditRequest extends FormRequest
     {
         return [
             'id'         => 'bail|required|integer',
-            'name'       => 'bail|sometimes|string',
-            'hospital'   => 'bail|sometimes|string',
-            'department' => 'bail|sometimes|integer',
-            'position'   => 'bail|sometimes|integer',
-            'cell'       => 'bail|sometimes|integer',
-            'saler'      => 'bail|sometimes|string',
-            'sale_cell'  => 'bail|sometimes|integer'
+            'name'       => 'bail|nullable|string',
+            'hospital'   => 'bail|nullable|string',
+            'department' => 'bail|nullable|integer',
+            'position'   => 'bail|nullable|integer',
+            'cell'       => 'bail|nullable|digits:11',
+            'saler'      => 'bail|nullable|string',
+            'sale_cell'  => 'bail|nullable|digits:11'
         ];
     }
 
@@ -43,9 +43,9 @@ class DoctorEditRequest extends FormRequest
             'hospital.integer'   => -1100012,
             'department.integer' => -1100014,
             'position.integer'   => -1100016,
-            'cell.integer'       => -1100018,
+            'cell.digits'       => -1100018,
             'saler.string'       => -1100019,
-            'sale_cell.integer'  => -1100020,
+            'sale_cell.digits'  => -1100020,
         ];
     }
 }

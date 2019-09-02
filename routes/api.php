@@ -22,8 +22,9 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('user/info', 'UsersController@info');
 
     // 医生管理
-    Route::get('doctor/{id?}', 'DoctorController@list');
-    Route::post('doctor', 'DoctorController@create');
+    Route::get('doctor', 'DoctorController@list');
+    Route::get('doctor/{id}', 'DoctorController@info');
+    Route::post('doctor/create', 'DoctorController@create');
     Route::post('doctor/edit', 'DoctorController@update');
     Route::post('doctor/delete/{id}', 'DoctorController@delete');
     Route::get('doctor/{id}', 'DoctorController@info');
@@ -32,10 +33,6 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('patient/list', 'PatientController@list');
 });
 
-
-
-
 Route::post('sms/send', 'SmsController@send');
+Route::post('sms/validate', 'SmsController@verify');
 
-// 扫码绑定医生
-Route::get('doctor/patient/{uuid}', 'DoctorController@bind');

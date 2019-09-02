@@ -51,7 +51,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        dump($exception);
         if ($exception instanceof AuthenticationException) {
             return response()->json(array('code' => -2100002,
                 'error' => MessagesHelper::get(-2100002)), 400);
