@@ -24,5 +24,5 @@ Route::post('user/register', 'RegisterController@save');
 Route::any('wechat', 'WeChatController@Connection');
 
 
-Route::post('/wechat/connection', 'WeChatController@Connection');
-Route::get('/wechat/connection', 'WeChatController@serve');
+Route::post('wechat/connection', 'WeChatController@Connection');
+Route::get('wechat/connection', 'WeChatController@serve');
