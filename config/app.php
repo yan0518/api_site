@@ -194,6 +194,8 @@ return [
 
         Toplan\PhpSms\PhpSmsServiceProvider::class,
         Toplan\Sms\SmsManagerServiceProvider::class,
+        
+        OliveFM\AliOSS\AliOssServiceProvider::class,
 
     ],
 
