@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PatientCreateRequest;
+use App\Models\DoctorPatients;
 use App\Repositories\DoctorPatientsRepositoryEloquent;
 use App\Repositories\DoctorsRepositoryEloquent;
 use App\Repositories\PatientRepositoryEloquent;
@@ -62,10 +63,11 @@ class RegisterController extends Controller
         ];
         $patientId = $this->patient->create($patient);
 
+
         //用户与医生绑定关系
         $this->doctor_patients->create([
             'doctor_id' => $doctor->id,
-            'patient_id' => patientId,
+            'patient_id' => $patientId->id,
             'status' => DoctorPatients::status_valid
         ]);
 
