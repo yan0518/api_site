@@ -38,3 +38,4 @@ Route::post('sms/validate', 'SmsController@verify');
 
 
 
+Route::get('wechat/connection', 'WeChatController@serve');
