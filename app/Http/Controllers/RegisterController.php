@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PatientCreateRequest;
+use App\Repositories\DoctorPatientsRepositoryEloquent;
+use App\Repositories\DoctorsRepositoryEloquent;
 use App\Repositories\PatientRepositoryEloquent;
 use Illuminate\Http\Request;
 use App\Exceptions\DoctorAppException;
 use App\Http\Controllers\Controller;
 use App\Repositories\UsersRepositoryEloquent;
 use Illuminate\View\View;
-use App\Http\Request\PatientCreateRequest;
-use App\Models\Patient;
 
 /**
  * Class UsersController.
@@ -22,28 +23,33 @@ class RegisterController extends Controller
     protected $patient;
     protected $doctor_patients;
 
+    protected $doctor;
+
     /**
      * UsersController constructor.
      *
      * @param UsersRepositoryEloquent $repository
      */
     public function __construct(PatientRepositoryEloquent $patient,
-                    DoctorPatientsRepositoryEloquent $doctor_patients)
+                                DoctorsRepositoryEloquent $doctor,
+                                DoctorPatientsRepositoryEloquent $doctor_patients)
     {
         $this->patient = $patient;
+        $this->doctor = $doctor;
         $this->doctor_patients = $doctor_patients;
     }
 
     public function index()
     {
-        return View('register');
+        $docId = 1;
+        return View('register', compact('docId'));
     }
 
     public function save(PatientCreateRequest $request)
     {
         $uuid = $request->uuid;
         $doctor = $this->doctor->findWhere(['uuid' => $uuid])->first();
-        if(is_null($doctor)){
+        if (is_null($doctor)) {
             throw new DoctorAppException(-2100003);
         }
 
@@ -51,7 +57,7 @@ class RegisterController extends Controller
         $patient = [
             'name' => $request->name,
             'sex' => $request->sex,
-            'bday' => $request->bday,
+            'birthday' => $request->bday,
             'cell' => $request->cell
         ];
         $patientId = $this->patient->create($patient);
@@ -63,7 +69,7 @@ class RegisterController extends Controller
             'status' => DoctorPatients::status_valid
         ]);
 
-        return $this->SuccessResponse(); 
+        return $this->SuccessResponse();
     }
 
     public function succeed()
