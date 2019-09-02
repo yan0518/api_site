@@ -46,8 +46,13 @@ class DoctorController extends Controller
     public function list(Request $request) {
         $pageNum = $request->pageNum ?? 1;
         $pageSize = $request->pageSize ?? 20;
+        $params = $request->searchKey ?? '';
 
         $query = Doctors::where('status', '!=', Doctors::status_invalid);
+        if($params) {
+            $query->where('name', 'like', '%'.$params.'%')
+                        ->orWhere('cell', $params);
+        }
         $total = $query->count();
         $list = $query->offset(($pageNum - 1)* $pageSize)
                 ->limit($pageSize)
