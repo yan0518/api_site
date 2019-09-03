@@ -88,7 +88,15 @@ class WeChatController extends Controller
         $eventList = explode('_', $eventKey);
 
         if ($eventList[0] == 1001) {
-            return '134';
+            $items = [
+                new NewsItem([
+                    'title' => '微信绑定',
+                    'description' => '',
+                    'url' => 'http://api.pigzu.com/user/register/' . $eventList[1],
+                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
+                ])
+            ];
+            return new News($items);
         }
     }
 
@@ -120,12 +128,6 @@ class WeChatController extends Controller
                     break;
                 case 'text':
                     $items = [
-                        new NewsItem([
-                            'title' => '微信绑定',
-                            'description' => '',
-                            'url' => 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f',
-                            'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
-                        ]),
                         new NewsItem([
                             'title' => '微信绑定',
                             'description' => '',

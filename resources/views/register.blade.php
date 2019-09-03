@@ -16,22 +16,22 @@
     <img src="{{env('APP_URL')}}/img/banner.png" class="banner">
     <div class="userForm">
         <div class="tips"><span class="asterisk">*</span>号标注为必填项</div>
-        <div class="name">
-            <span class="asterisk1">*</span>
-            <input type="text" id="name" placeholder="请输入姓名">
-        </div>
-        <div class="sex">
-            <span class="asterisk1">*</span>
-            <div class="sexType">
-                <div data-id="0">男</div>
-                <div class="sexWomen" id="women" data-id="1">女</div>
-            </div>
-        </div>
-        <div class="calendar">
-            <span class="asterisk1">*</span>
-            <input type="date" id="bday" placeholder="请选择出生年月日">
-            <div class="svg" id="svg"></div>
-        </div>
+        {{--<div class="name">--}}
+            {{--<span class="asterisk1">*</span>--}}
+            {{--<input type="text" id="name" placeholder="请输入姓名">--}}
+        {{--</div>--}}
+        {{--<div class="sex">--}}
+            {{--<span class="asterisk1">*</span>--}}
+            {{--<div class="sexType">--}}
+                {{--<div data-id="0">男</div>--}}
+                {{--<div class="sexWomen" id="women" data-id="1">女</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+        {{--<div class="calendar">--}}
+            {{--<span class="asterisk1">*</span>--}}
+            {{--<input type="date" id="bday" placeholder="请选择出生年月日">--}}
+            {{--<div class="svg" id="svg"></div>--}}
+        {{--</div>--}}
         <div class="phone">
             <span class="asterisk1">*</span>
             <input type="number" oninput="if(value.length>11) value=value.slice(0,11)" placeholder="请输入手机号" id="phone">
@@ -184,40 +184,40 @@
         // // 手机号码验证码的正则
         $('.Submission').click(function () {
             let that = this
-            let name = $.trim($('#name').val());
-            if (name === '') {
-                $('.showText').html('请输入姓名！')
-                $('#shade').css('display', 'block')
-                $('#modal').css('display', 'block')
-                return false
-            }
-
-            let sex = $.trim($('.selectNow').attr('data-id'));
-            if (sex === '') {
-                $('.showText').html('请选择性别！')
-                $('#shade').css('display', 'block')
-                $('#modal').css('display', 'block')
-                return false
-            }
-
-            let bday = $.trim($('#bday').val());
-            if (bday === '') {
-                $('.showText').html('请输入出生年月！')
-                $('#shade').css('display', 'block')
-                $('#modal').css('display', 'block')
-                return false
-            }
-
-            var newDay = new Date()
-            var year = newDay.getFullYear()
-            let inputDate = new Date(bday).getTime()
-            let today = new Date().getTime()
-            if (inputDate > today) {
-                $('.showText').html('出生年份的范围为1900-' + year + ',请确认！')
-                $('#shade').css('display', 'block')
-                $('#modal').css('display', 'block')
-                return false
-            }
+            // let name = $.trim($('#name').val());
+            // if (name === '') {
+            //     $('.showText').html('请输入姓名！')
+            //     $('#shade').css('display', 'block')
+            //     $('#modal').css('display', 'block')
+            //     return false
+            // }
+            //
+            // let sex = $.trim($('.selectNow').attr('data-id'));
+            // if (sex === '') {
+            //     $('.showText').html('请选择性别！')
+            //     $('#shade').css('display', 'block')
+            //     $('#modal').css('display', 'block')
+            //     return false
+            // }
+            //
+            // let bday = $.trim($('#bday').val());
+            // if (bday === '') {
+            //     $('.showText').html('请输入出生年月！')
+            //     $('#shade').css('display', 'block')
+            //     $('#modal').css('display', 'block')
+            //     return false
+            // }
+            //
+            // var newDay = new Date()
+            // var year = newDay.getFullYear()
+            // let inputDate = new Date(bday).getTime()
+            // let today = new Date().getTime()
+            // if (inputDate > today) {
+            //     $('.showText').html('出生年份的范围为1900-' + year + ',请确认！')
+            //     $('#shade').css('display', 'block')
+            //     $('#modal').css('display', 'block')
+            //     return false
+            // }
 
             let phoneNum = $.trim($('#phone').val());
             var phoneReg = /^1\d{10}$/;
@@ -242,9 +242,6 @@
 
             let userInfo = {
                 "uuid": "{{$docId}}",
-                "name": name,
-                "sex": sex,
-                "bday": bday,
                 "cell": phoneNum,
                 "verify_code": verificationCode,
             };
