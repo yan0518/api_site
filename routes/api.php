@@ -34,6 +34,13 @@ Route::group(['middleware' => ['auth:api', 'cors']], function(){
 
     // 获取微信二维码
     Route::get('wechat/qrcode/{id}', 'WeChatController@qrcode');
+
+    // 管理员管理
+    Route::get('user', 'UsersController@list');
+    Route::post('user/create', 'UsersController@create');
+    Route::post('user/edit', 'UsersController@update');
+    Route::post('user/delete/{id}', 'UsersController@delete');
+    Route::get('user/{id}', 'UsersController@get');
 });
 
 Route::post('sms/send', 'SmsController@send');
