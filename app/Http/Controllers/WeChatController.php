@@ -85,7 +85,8 @@ class WeChatController extends Controller
 
     private function scanProcess($eventKey, $openId)
     {
-        $eventList = explode($eventKey, '_');
+        $eventList = explode('_', $eventKey);
+
         if ($eventList[0] == 1001) {
             return '134';
         }
