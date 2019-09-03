@@ -119,7 +119,7 @@ class WeChatController extends Controller
                     return self::EventProcess($message);
                     break;
                 case 'text':
-                    $items[] = [
+                    $items = [
                         new NewsItem([
                             'title' => '微信绑定',
                             'description' => '',
