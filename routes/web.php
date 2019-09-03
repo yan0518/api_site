@@ -24,4 +24,4 @@ Route::post('user/register', 'RegisterController@save');
 
 
 // 获取微信二维码
-Route::get('wechat/qrcode/{uuid}', 'WeChatController@qrcode');
+Route::get('wechat/qrcode/{id}', 'WeChatController@qrcode');
