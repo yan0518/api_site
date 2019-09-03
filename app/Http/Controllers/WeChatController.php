@@ -30,7 +30,7 @@ class WeChatController extends Controller
     public function EventProcess($message)
     {
 
-        return json_encode($message);
+
         $openid = $message->FromUserName;
         switch ($message->Event) {
             //订阅
@@ -40,6 +40,7 @@ class WeChatController extends Controller
                 $userService = $wechat->user;
 
                 $wechatUserFromWX = $userService->get($openid);
+                return json_encode($wechatUserFromWX);
 
                 $data['subscribe'] = $wechatUserFromWX['subscribe'];
                 $data['openID'] = $openid;
@@ -121,7 +122,6 @@ class WeChatController extends Controller
                     return new News($items);
                     break;
                 case 'image':
-
                     break;
                 case 'voice':
                     break;
