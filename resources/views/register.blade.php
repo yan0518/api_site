@@ -105,14 +105,14 @@
                 FastClick.attach(document.body);
             }, false);
         }
-
-        var o = document.getElementById('bday');
-        o.onfocus = function () {
-            this.removeAttribute('placeholder');
-        };
-        o.onblur = function () {
-            if (this.value == '') this.setAttribute('placeholder', '我是日期');
-        };
+        //
+        // var o = document.getElementById('bday');
+        // o.onfocus = function () {
+        //     this.removeAttribute('placeholder');
+        // };
+        // o.onblur = function () {
+        //     if (this.value == '') this.setAttribute('placeholder', '我是日期');
+        // };
 
         // 点击不同的性别改变其背景颜色
         $(".sexType div").click(function () {
