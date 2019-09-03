@@ -29,7 +29,7 @@ class WeChatController extends Controller
      */
     public function EventProcess($message)
     {
-       return json_encode($message);
+        return json_encode($message);
 
         $openid = $message['FromUserName'];
         switch ($message['Event']) {
@@ -66,6 +66,7 @@ class WeChatController extends Controller
                 break;
             //已订阅用户扫码
             case 'SCAN':
+                return $this->scanProcess($message['EventKey'], $openid);
                 break;
             //上报地理位置事件
             case 'LOCATION':
@@ -81,6 +82,15 @@ class WeChatController extends Controller
                 break;
         }
         return NULL;
+    }
+
+
+    private function scanProcess($eventKey, $openId)
+    {
+        $eventList = explode($eventKey, '_');
+        if ($eventList[0] == 1001) {
+            return '134';
+        }
     }
 
     /**
