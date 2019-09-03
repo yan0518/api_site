@@ -67,12 +67,17 @@ class UsersController extends Controller
         $data = $this->user->find($id);
 
         return $this->SuccessResponse($data);
-    }}
+    }
 
     public function create(UserRequest $request) {
+        $user = $this->user->findWhere(['login_id' => $request->login_id, 'status' => Users::status_valid])->first();
+        $user_cell = $this->user->findWhere(['cell' => $request->cell, 'status' => Users::status_valid])->first();
+        if(!is_null($user) || !is_null($user_cell)) {
+            throw new DoctorAppException(-2100009);
+        }
         $data = [
             'name' => $request->name,
-            'pwd' => $request->password,
+            'password' => $request->password,
             'login_id' => $request->login_id,
             'cell' => $request->cell,
             'gender' => 0,
@@ -85,11 +90,18 @@ class UsersController extends Controller
     }
 
     public function update(UserEditRequest $request) {
+
+        $user = $this->user->findWhere(['login_id' => $request->login_id, ['id', '!=', $request->id],  'status' => Users::status_valid])->first();
+        $user_cell = $this->user->findWhere(['cell' => $request->cell, ['id', '!=', $request->id], 'status' => Users::status_valid])->first();
+        if(!is_null($user) || !is_null($user_cell)) {
+            throw new DoctorAppException(-2100009);
+        }
+
         if(!empty($request->name)){
             $data['name'] = $request->name;
         }
         if(!empty($request->password)){
-            $data['pwd'] = $request->password;
+            $data['password'] = $request->password;
         }
         if(!empty($request->login_id)){
             $data['login_id'] = $request->login_id;
@@ -107,7 +119,8 @@ class UsersController extends Controller
         if(is_null($user)){
             throw new DoctorAppException(-2100008);
         }
-        $this->user->update(['status' =>  User::status_invalid], $id);
+        $this->user->update(['status' => Users::status_invalid], $id);
 
         return $this->SuccessResponse();
     }
+}
