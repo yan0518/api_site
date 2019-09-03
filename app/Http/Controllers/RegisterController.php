@@ -87,7 +87,7 @@ class RegisterController extends Controller
         $user = $this->wechat_user->findWhere(['openID' => $request->openid])->first();
 
         //更新微信用户手机号
-        $this->wechat_user->update(['cell' => $cell], $user_id);
+        $this->wechat_user->update(['cell' => $request->cell], $user_id);
 
 
         //用户与医生绑定关系
