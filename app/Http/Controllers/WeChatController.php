@@ -147,7 +147,7 @@ class WeChatController extends Controller
         $wechat = app('wechat.official_account');
         $result = $wechat->qrcode->forever('1001' . '_' . $id);
 
-        $url = $result->url;
+        $url = $result['url'];
 
         return $this->SuccessResponse($url);
     }
