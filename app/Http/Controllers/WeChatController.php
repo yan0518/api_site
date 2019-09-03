@@ -29,10 +29,10 @@ class WeChatController extends Controller
      */
     public function EventProcess($message)
     {
+//        return json_encode($message);
 
-
-        $openid = $message->FromUserName;
-        switch ($message->Event) {
+        $openid = $message['FromUserName'];
+        switch ($message['Event']) {
             //订阅
             case 'subscribe':
 
@@ -40,7 +40,6 @@ class WeChatController extends Controller
                 $userService = $wechat->user;
 
                 $wechatUserFromWX = $userService->get($openid);
-                return json_encode($wechatUserFromWX);
 
                 $data['subscribe'] = $wechatUserFromWX['subscribe'];
                 $data['openID'] = $openid;
@@ -145,11 +144,10 @@ class WeChatController extends Controller
 
     public function qrcode($uuid)
     {
-        // $wechat = app('wechat.official_account');
-        // $result = $wechat->qrcode->forever($uuid);
+        $wechat = app('wechat.official_account');
+        $result = $wechat->qrcode->forever($uuid);
 
-        // $url = $result->url ?? '';
-        $url = 'http://api.pigzu.com/user/register/bd6325a5-27b8-47d6-8dc1-25be757ae94f';
+        $url = $result->url ?? 'http://www.pigzu.com';
 
         return $this->SuccessResponse($url);
     }
