@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('user/register/{docId}', 'RegisterController@index');
+Route::get('user/register/{docId}/{openId}', 'RegisterController@index');
 Route::get('user/register_succeed', 'RegisterController@succeed');
 
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exceptions\SmartAppException;
 use App\Http\Controllers\Controller;
-use App\Repositories\PatientRepositoryEloquent;
+use App\Repositories\WechatUsersRepositoryEloquent;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -16,18 +16,18 @@ use Illuminate\Support\Facades\Storage;
 class PatientController extends Controller
 {
     /**
-     * @var PatientRepositoryEloquent
+     * @var WechatUsersRepositoryEloquent
      */
-    protected $patients;
+    protected $wechat_user;
 
     /**
      * PatientController constructor.
      *
-     * @param PatientRepositoryEloquent $repository
+     * @param WechatUsersRepositoryEloquent $repository
      */
-    public function __construct(PatientRepositoryEloquent $patients)
+    public function __construct(WechatUsersRepositoryEloquent $wechat_user)
     {
-        $this->patients = $patients;
+        $this->wechat_user = $wechat_user;
     }
 
     public function list(Request $request) {
@@ -35,7 +35,7 @@ class PatientController extends Controller
         $pageSize = $request->pageSize ?? 20;
         $params = $request->searchKey ?? '';
 
-        $data = $this->patients->getPatientList($pageNum, $pageSize, $params);
+        $data = $this->wechat_user->getPatientList($pageNum, $pageSize, $params);
         
         if(is_null($data)){
             $data = [];

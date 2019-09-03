@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\WechatUsersRepositoryEloquent;
+use App\Repositories\DoctorsRepositoryEloquent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use EasyWeChat;
@@ -15,10 +16,13 @@ use Log;
 class WeChatController extends Controller
 {
 
+    protected $doctor;
 
-    public function __construct(WechatUsersRepositoryEloquent $wechatUserRepository)
+    public function __construct(WechatUsersRepositoryEloquent $wechatUserRepository,
+                            DoctorsRepositoryEloquent $doctor)
     {
         $this->wechatUserRepository = $wechatUserRepository;
+        $this->doctor = $doctor;
     }
 
 
@@ -91,7 +95,7 @@ class WeChatController extends Controller
                 new NewsItem([
                     'title' => '微信绑定',
                     'description' => '',
-                    'url' => 'http://api.pigzu.com/user/register/' . $eventList[1],
+                    'url' => 'http://api.pigzu.com/user/register/' . $eventList[1] .'/'. $openId,
                     'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
                 ])
             ];
@@ -150,12 +154,23 @@ class WeChatController extends Controller
     }
 
     public function qrcode($id)
-    {
-        $wechat = app('wechat.official_account');
-        $result = $wechat->qrcode->forever('1001' . '_' . $id);
+    {   
+        $doctor = $this->doctor->findWhere(['uuid' => $id])->first();
+        if (is_null($doctor)) {
+            throw new DoctorAppException(-2100003);
+        }else{
+            if($doctor->qrcode_url) {
+                $url = $doctor->qrcode_url;
+            }else{
+                $wechat = app('wechat.official_account');
+                $result = $wechat->qrcode->forever('1001' . '_' . $id);
 
-        $url = $result['url'];
+                $url = $result['url'];
+                // save to doctors
+                $this->doctor->update(['qrcode_url' => $url], $doctor->id);
+            }
 
-        return $this->SuccessResponse($url);
+            return $this->SuccessResponse($url);
+        }
     }
 }

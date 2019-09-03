@@ -242,6 +242,7 @@
 
             let userInfo = {
                 "uuid": "{{$docId}}",
+                "openid": "{{$openId}}",
                 "cell": phoneNum,
                 "verify_code": verificationCode,
             };
