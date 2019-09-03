@@ -45,9 +45,9 @@ class RegisterController extends Controller
         $this->verify_code = $verify_code;
     }
 
-    public function index($docId)
+    public function index($docId, $openId)
     {
-        return View('register', compact('docId'));
+        return View('register', compact('docId', 'openId'));
     }
 
     public function save(PatientCreateRequest $request)
