@@ -51,7 +51,7 @@ class WechatUsersRepositoryEloquent extends BaseRepository implements WechatUser
         }
         $query->select(
             'wechat_users.id',
-            'wechat_users.nickname',
+            'wechat_users.nickname as name',
             'wechat_users.cell',
             'doctors.name as doctor_name',
             'doctor_patients.created_at'
