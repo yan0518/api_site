@@ -29,7 +29,7 @@ class WeChatController extends Controller
      */
     public function EventProcess($message)
     {
-//        return json_encode($message);
+       return json_encode($message);
 
         $openid = $message['FromUserName'];
         switch ($message['Event']) {
@@ -142,10 +142,10 @@ class WeChatController extends Controller
 
     }
 
-    public function qrcode($uuid)
+    public function qrcode($id)
     {
         $wechat = app('wechat.official_account');
-        $result = $wechat->qrcode->forever($uuid);
+        $result = $wechat->qrcode->forever('1001' . '_' . $id);
 
         $url = $result->url;
 
