@@ -147,7 +147,7 @@ class WeChatController extends Controller
         $wechat = app('wechat.official_account');
         $result = $wechat->qrcode->forever($uuid);
 
-        $url = $result->url ?? 'http://www.pigzu.com';
+        $url = $result->url;
 
         return $this->SuccessResponse($url);
     }
