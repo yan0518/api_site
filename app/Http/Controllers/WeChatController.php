@@ -34,29 +34,29 @@ class WeChatController extends Controller
     public function EventProcess($message)
     {
         $openid = $message['FromUserName'];
+
+        $wechat = app('wechat.official_account');
+        $userService = $wechat->user;
+
+        $wechatUserFromWX = $userService->get($openid);
+
+        $data['subscribe'] = $wechatUserFromWX['subscribe'];
+        $data['openID'] = $openid;
+        $data['nickname'] = $wechatUserFromWX['nickname'];
+        $data['sex'] = $wechatUserFromWX['sex'];
+        $data['city'] = $wechatUserFromWX['city'];
+        $data['country'] = $wechatUserFromWX['country'];
+        $data['province'] = $wechatUserFromWX['province'];
+        $data['language'] = $wechatUserFromWX['language'];
+        $data['headimgurl'] = $wechatUserFromWX['headimgurl'];
+        $data['subscribe_time'] = $wechatUserFromWX['subscribe_time'];
+        $data['remark'] = $wechatUserFromWX['remark'];
+        $data['groupid'] = $wechatUserFromWX['groupid'];
+
+        $this->wechatUserRepository->updateOrCreate(['openID' => $openid], $data);
         switch ($message['Event']) {
             //订阅
             case 'subscribe':
-
-                $wechat = app('wechat.official_account');
-                $userService = $wechat->user;
-
-                $wechatUserFromWX = $userService->get($openid);
-
-                $data['subscribe'] = $wechatUserFromWX['subscribe'];
-                $data['openID'] = $openid;
-                $data['nickname'] = $wechatUserFromWX['nickname'];
-                $data['sex'] = $wechatUserFromWX['sex'];
-                $data['city'] = $wechatUserFromWX['city'];
-                $data['country'] = $wechatUserFromWX['country'];
-                $data['province'] = $wechatUserFromWX['province'];
-                $data['language'] = $wechatUserFromWX['language'];
-                $data['headimgurl'] = $wechatUserFromWX['headimgurl'];
-                $data['subscribe_time'] = $wechatUserFromWX['subscribe_time'];
-                $data['remark'] = $wechatUserFromWX['remark'];
-                $data['groupid'] = $wechatUserFromWX['groupid'];
-
-                $this->wechatUserRepository->updateOrCreate(['openID' => $openid], $data);
 
                 return '欢迎关注';
                 break;
