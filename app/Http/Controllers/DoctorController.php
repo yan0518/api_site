@@ -66,7 +66,7 @@ class DoctorController extends Controller
 
     public function info($id) {
         $data = $this->doctor->find($id);
-        $data->photo = Storage::url($data->photo);
+        $data->photo = !empty($data->photo) ? Storage::url($data->photo) : '';
 
         return $this->SuccessResponse($data);
     }
