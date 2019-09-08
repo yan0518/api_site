@@ -91,37 +91,21 @@ class WeChatController extends Controller
         $eventList = explode('_', $eventKey);
 
         if ($eventList[0] == 1001) {
-//            $items = [
-//
-//                new NewsItem([
-//                    'title' => '微信绑定',
-//                    'description' => '',
-//                    'url' => 'http://api.pigzu.com/user/register/' . $eventList[1] .'/'. $openId,
-//                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg',
-//                ])
-//            ];
-//            return new News($items);
-
-            $a[] = new News([
-                'title' => '【外卖优惠共享】全新大改版',
-                'description' => '提高用户体验，大大提高【手气红包】概率',
-                'url' => 'http://mp.weixin.qq.com/s/Ic87Hm4ecKewfG8ZUTTfXg',
-                'image' => 'http://www.3dmgame.com/uploads/allimg/171029/154_171029171922_1.jpg',
-            ]);
-
-            $a[] = new News([
-                'title' => '玩转外卖手气红包原理',
-                'description' => '欢迎使用[Luck红包],红包发一返四，60%的有机会获得【手气红包】哦！',
-                'url' => 'http://mp.weixin.qq.com/s/6PR2wYRK3TqUUWprWgvhgA',
-                'image' => 'https://mmbiz.qpic.cn/mmbiz_png/g7lYvtuuZFJia5Uba6AmMt4JrKZPYJsA8icWKS6W9sTic6QC2zmicatlzEQh9Cc7xMtcbRE5cXrYibkiavDsOAygdzeg/0?wx_fmt=png',
-            ]);
-            $a[] = new News([
-                'title' => '分享使用手册',
-                'description' => '欢迎使用[Luck红包],红包发一返四，60%的有机会获得【手气红包】哦！',
-                'url' => 'http://mp.weixin.qq.com/s/VBCTZrGt6CLNOkdnhu9v_w',
-                'image' => 'https://mmbiz.qpic.cn/mmbiz_jpg/g7lYvtuuZFKPKKwpwwQXNF2T2z0TbcPuPj9TN8icQ85tKbBxA9Z1UNmmQ6d6yBJLqjsickGSibGEnACOOr4zIzEvQ/0?wx_fmt=jpeg',
-            ]);
-            return $a;
+            $items = [
+                new NewsItem([
+                    'title' => '微信绑定',
+                    'description' => '',
+                    'url' => 'http://api.pigzu.com/user/register/' . $eventList[1] .'/'. $openId,
+                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg',
+                ]),
+                new NewsItem([
+                    'title' => '微信绑定',
+                    'description' => '',
+                    'url' => 'http://api.pigzu.com/user/register/' . $eventList[1] .'/'. $openId,
+                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg',
+                ])
+            ];
+            return new News($items);
         }
     }
 
