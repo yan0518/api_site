@@ -7,13 +7,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{env('APP_URL')}}/js/rem.js"></script>
     <link rel="stylesheet" href="{{env('APP_URL')}}/css/ResetCss.css">
-    <link rel="stylesheet" href="{{env('APP_URL')}}/css/index.css?v4">
+    <link rel="stylesheet" href="{{env('APP_URL')}}/css/index.css?v3">
     <script src="{{env('APP_URL')}}/js/zepto.js"></script>
     <script src="{{env('APP_URL')}}/js/svgxuse.js"></script>
 </head>
 <body style="background: #f3f3f3;">
 <div class="content">
-    <img src="https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg" class="banner">
+    <img src="{{env('APP_URL')}}/img/banner.png" class="banner">
     <div class="userForm">
         <div class="tips"><span class="asterisk">*</span>号标注为必填项</div>
         {{--<div class="name">--}}
