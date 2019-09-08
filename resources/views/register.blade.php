@@ -13,7 +13,7 @@
 </head>
 <body style="background: #f3f3f3;">
 <div class="content">
-    <img src="{{env('APP_URL')}}/img/banner.png" class="banner">
+    <img src="https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg" class="banner">
     <div class="userForm">
         <div class="tips"><span class="asterisk">*</span>号标注为必填项</div>
         {{--<div class="name">--}}

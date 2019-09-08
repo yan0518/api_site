@@ -96,7 +96,7 @@ class WeChatController extends Controller
                     'title' => '微信绑定',
                     'description' => '',
                     'url' => 'http://api.pigzu.com/user/register/' . $eventList[1] .'/'. $openId,
-                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/wechat/banner.png',
+                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg',
                 ])
             ];
             return new News($items);
@@ -164,7 +164,6 @@ class WeChatController extends Controller
             }else{
                 $wechat = app('wechat.official_account');
                 $result = $wechat->qrcode->forever('1001' . '_' . $id);
-
                 $url = $result['url'];
                 // save to doctors
                 $this->doctor->update(['qrcode_url' => $url], $doctor->id);
