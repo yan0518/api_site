@@ -6,7 +6,7 @@
     <title>报名成功引导页</title>
     <script src="{{env('APP_URL')}}/js/rem.js"></script>
     <link rel="stylesheet" href="{{env('APP_URL')}}/css/ResetCss.css">
-    <link rel="stylesheet" href="{{env('APP_URL')}}/css/index.css?v3">
+    <link rel="stylesheet" href="{{env('APP_URL')}}/css/index.css?v4">
 </head>
 <body>
 <div class="content1">
