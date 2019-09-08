@@ -93,13 +93,13 @@ class WeChatController extends Controller
         if ($eventList[0] == 1001) {
             $items = [
                 new NewsItem([
-                    'title' => '微信绑定',
+                    'title' => '',
                     'description' => '',
                     'url' => 'http://api.pigzu.com/user/register/' . $eventList[1] .'/'. $openId,
                     'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg',
                 ]),
                 new NewsItem([
-                    'title' => '微信绑定',
+                    'title' => '欢迎关注天益常乐—营养健康专家，请先绑定账号获取最新的健康知识。',
                     'description' => '',
                     'url' => 'http://api.pigzu.com/user/register/' . $eventList[1] .'/'. $openId,
                     'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg',
