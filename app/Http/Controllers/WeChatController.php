@@ -96,13 +96,13 @@ class WeChatController extends Controller
                     'title' => '',
                     'description' => '',
                     'url' => 'http://api.vitaloop.cn/user/register/' . $eventList[1] .'/'. $openId,
-                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg',
+                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL2.jpg',
                 ]),
                 new NewsItem([
                     'title' => '欢迎关注恰麟科技—营养健康专家，请先绑定账号获取最新的健康知识。',
                     'description' => '',
                     'url' => 'http://api.vitaloop.cn/user/register/' . $eventList[1] .'/'. $openId,
-                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL.jpg',
+                    'image' => 'https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL2.jpg',
                 ])
             ];
             return new News($items);
