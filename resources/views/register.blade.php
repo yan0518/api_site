@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>患者报名</title>
+    <title>用户注册</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{env('APP_URL')}}/js/rem.js"></script>
     <link rel="stylesheet" href="{{env('APP_URL')}}/css/ResetCss.css">
@@ -13,7 +13,7 @@
 </head>
 <body style="background: #f3f3f3;">
 <div class="content">
-    <img src="{{env('APP_URL')}}/img/banner.png" class="banner">
+    <img src="https://zz-med-national.oss-cn-hangzhou.aliyuncs.com/CminiProgram/images/TYCL2.jpg" class="banner">
     <div class="userForm">
         <div class="tips"><span class="asterisk">*</span>号标注为必填项</div>
         {{--<div class="name">--}}
