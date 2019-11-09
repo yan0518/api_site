@@ -14,6 +14,8 @@ use App\Exceptions\DoctorAppException;
 use App\Http\Controllers\Controller;
 use App\Repositories\UsersRepositoryEloquent;
 use Illuminate\View\View;
+use EasyWeChat;
+use Carbon\Carbon;
 
 /**
  * Class UsersController.
@@ -47,6 +49,22 @@ class RegisterController extends Controller
 
     public function index($docId, $openId)
     {
+        $user_info = $this->wechat_user->findWhere(['openID' => $openId])->first();
+        if (!$user_info) {
+            return $this->ErrorResponse(-999);
+        }
+
+        $docInfo = $this->doctor->findWhere(['uuid' => $docId])->first();
+        if (!$docInfo) {
+            return $this->ErrorResponse(-999);
+        }
+
+        $bindInfo = $this->doctor_patients->findWhere(['doctor_id' => $docInfo->id, 'patient_id' => $user_info->id])->first();
+        if ($bindInfo) {
+            return View('registerSucceed');
+        }
+
+
         return View('register', compact('docId', 'openId'));
     }
 
@@ -95,6 +113,24 @@ class RegisterController extends Controller
             'doctor_id' => $doctor->id,
             'patient_id' => $user->id,
             'status' => DoctorPatients::status_valid
+        ]);
+
+        $wechatServer = app('wechat.official_account');
+        $wechatServer->template_message->send([
+            'touser' => $request->openid,
+            'template_id' => '0dyi8qARPhUviBIQFxUidbq9-XR9F_EOkyUWllFvDLs',
+            'url' => 'https://www.wenjuan.com/s/BJBbaed',
+            'miniprogram' => [
+                'appid' => 'wx97cfa6ffa05a01d7',
+                'pagepath' => 'pages/shelf/shelf',
+            ],
+            'data' => [
+                'first' => '欢迎你加入喜福康平台！',
+                'keyword1' => $request->cell,
+                'keyword2' => Carbon::now(),
+                'keyword3' => '喜福康平台',
+                'remark' => '更多优惠信息，尽在喜福康商城！'
+            ],
         ]);
 
         return $this->SuccessResponse();
